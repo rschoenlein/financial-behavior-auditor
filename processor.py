@@ -1,0 +1,1 @@
+"import pandas as pd; from datetime import datetime, timedelta; def process_transactions(path): df = pd.read_csv(path); df['Date'] = pd.to_datetime(df['Date']); recent = df[df['Date'] >= (datetime.now() - timedelta(days=30))]; summary = recent.groupby('Category')['Amount'].sum().to_dict(); return {'total': sum(summary.values()), 'breakdown': summary, 'count': len(recent)}" 
