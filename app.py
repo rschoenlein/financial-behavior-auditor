@@ -65,7 +65,18 @@ if uploaded_file is not None and user_goal:
                 # Display Results
                 st.success("Audit Complete!")
                 st.markdown("### AI Behavioral Insights")
+                ai_response = message.content[0].text
                 st.write(message.content[0].text)
+
+                # --- NEW: Human-in-the-Loop Feature ---
+                st.divider()
+                st.info("💡 **Professional Oversight:** AI can make mistakes. Use the button below to send this analysis to a Certified Financial Planner (CFP®) for verification.")
+                
+                if st.button("🚩 Flag for Human Review"):
+                    # In a real app, this might send an email or save to a database
+                    with open("flagged_for_review.txt", "a") as f:
+                        f.write(f"Goal: {user_goal}\nAudit: {ai_response}\n---\n")
+                    st.toast("Analysis flagged for human expert review.", icon="✅")
 
     except Exception as e:
         st.error(f"Error processing CSV: Ensure it has 'Category' and 'Amount' columns. {e}")
